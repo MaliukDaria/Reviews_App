@@ -19,8 +19,9 @@ public class CustomFileReader {
                 result.add(br.readLine());
             }
         } catch (IOException e) {
-            LOGGER.error("Can`t read file", e);
+            throw new RuntimeException("Cant`t read the file " + path, e);
         }
+        LOGGER.info("File " + path + "read successfully");
         return result;
     }
 }
