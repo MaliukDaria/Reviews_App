@@ -7,10 +7,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class CustomFileReaderTest {
-
 
     @Test
     public void readFileOk() {
