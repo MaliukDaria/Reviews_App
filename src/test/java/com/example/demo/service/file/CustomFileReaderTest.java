@@ -7,24 +7,31 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class CustomFileReaderTest {
+    private static final String FILE_PATH = "test.csv";
+    private static CustomFileReader fileReader;
+
+    @BeforeAll
+    static void beforeAll() {
+        fileReader = new CustomFileReader();
+    }
 
     @Test
     public void readFileOk() {
-        String filePath = "test.csv";
         String text = "Hello World\nI am test file\nread me, please!";
         List<String> expected = Arrays.stream(text.split("\n")).collect(Collectors.toList());
         List<String> actual;
-        File file = new File(filePath);
+        File file = new File(FILE_PATH);
         try {
             file.createNewFile();
-            PrintWriter writer = new PrintWriter(filePath, "UTF-8");
+            PrintWriter writer = new PrintWriter(FILE_PATH, "UTF-8");
             writer.println(text);
             writer.close();
-            CustomFileReader fileReader = new CustomFileReader();
-            actual = fileReader.readFile(filePath);
+            actual = fileReader.readFile(FILE_PATH);
         } catch (IOException e) {
             throw new RuntimeException("Cant write file", e);
         } finally {
@@ -34,5 +41,26 @@ public class CustomFileReaderTest {
         for (int i = 0; i < expected.size(); i++) {
             Assert.assertEquals(actual.get(i), expected.get(i));
         }
+    }
+
+    @Test
+    public void readEmptyFile() {
+        List<String> actual;
+        File file = new File(FILE_PATH);
+        try {
+            file.createNewFile();
+            actual = fileReader.readFile(FILE_PATH);
+        } catch (IOException e) {
+            throw new RuntimeException("Cant write file", e);
+        } finally {
+            file.delete();
+        }
+        Assert.assertEquals(actual.size(), 0);
+    }
+
+    @Test
+    public void readNonExistentFile() {
+        Assertions.assertThrows(
+                RuntimeException.class, () -> fileReader.readFile("test.csv"));
     }
 }
