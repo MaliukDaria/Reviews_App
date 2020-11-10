@@ -11,13 +11,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-public class CustomFileReaderTest {
+public class FileSystemFileReaderTest {
     private static final String FILE_PATH = "test.csv";
-    private static CustomFileReader fileReader;
+    private static FileSystemFileReader fileReader;
 
     @BeforeAll
     static void beforeAll() {
-        fileReader = new CustomFileReader();
+        fileReader = new FileSystemFileReader();
     }
 
     @Test
@@ -61,6 +61,6 @@ public class CustomFileReaderTest {
     @Test
     public void readNonExistentFile() {
         Assertions.assertThrows(
-                RuntimeException.class, () -> fileReader.readFile("test.csv"));
+                RuntimeException.class, () -> fileReader.readFile(FILE_PATH));
     }
 }
