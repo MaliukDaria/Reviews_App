@@ -1,19 +1,21 @@
 package com.example.demo.service;
 
 import com.example.demo.service.file.CustomFileReader;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.List;
-import java.util.Properties;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Component
+@PropertySource("classpath:application.properties")
 public class ReviewsApplicationListener implements ApplicationListener<ApplicationReadyEvent> {
     private static final Logger LOGGER = Logger.getLogger(ReviewsApplicationListener.class);
     private final CustomFileReader fileReader;
+    @Value("${sourceFilePath}")
+    private String filePath;
 
     public ReviewsApplicationListener(CustomFileReader fileReader) {
         this.fileReader = fileReader;
@@ -22,15 +24,6 @@ public class ReviewsApplicationListener implements ApplicationListener<Applicati
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
         LOGGER.info("MyApplicationListener: onApplicationEvent method starts");
-        Properties fileProps = new Properties();
-        try {
-            fileProps.load(new FileInputStream("src/main/resources/sourсeFile.properties"));
-        } catch (IOException e) {
-            LOGGER.error("Cant load sourсeFile.properties file", e);
-            throw new RuntimeException("Cant load sourсeFile.properties file", e);
-        }
-        List<String> fileData =
-                fileReader.readFile(fileProps.getProperty("sourceFilePath"));
-        System.out.println();
+        List<String> fileData = fileReader.readFile(filePath);
     }
 }
