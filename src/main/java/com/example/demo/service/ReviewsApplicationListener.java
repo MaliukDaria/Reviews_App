@@ -6,11 +6,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Component
-@PropertySource("classpath:application.properties")
 public class ReviewsApplicationListener implements ApplicationListener<ApplicationReadyEvent> {
     private static final Logger LOGGER = Logger.getLogger(ReviewsApplicationListener.class);
     private final CustomFileReader fileReader;
