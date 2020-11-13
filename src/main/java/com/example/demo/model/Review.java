@@ -22,6 +22,8 @@ public class Review {
     private User user;
     @ManyToOne
     private Product product;
+    private Long helpfulnessNumerator;
+    private Long helpfulnessDenominator;
     private Long score;
     private LocalDateTime dateTime;
     private String summary;

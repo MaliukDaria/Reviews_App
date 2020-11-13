@@ -9,6 +9,8 @@ public class ReviewMapper {
     public Review mapToReview(ReviewDto reviewDto) {
         Review review = new Review();
         review.setExternalId(reviewDto.getId());
+        review.setHelpfulnessDenominator(reviewDto.getHelpfulnessDenominator());
+        review.setHelpfulnessNumerator(reviewDto.getHelpfulnessDenominator());
         review.setDateTime(reviewDto.getDateTime());
         review.setSummary(reviewDto.getSummary());
         review.setText(reviewDto.getText());

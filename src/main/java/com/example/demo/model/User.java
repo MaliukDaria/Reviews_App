@@ -19,8 +19,6 @@ public class User {
     private String externalId;
     private String profileName;
     private String password;
-    private Long helpfulnessNumerator;
-    private Long helpfulnessDenominator;
     @ManyToMany
     private Set<Role> roles;
 }
