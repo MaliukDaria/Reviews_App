@@ -16,11 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import org.apache.log4j.Logger;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class ReviewDtoDbDataSaver implements DbDataSaver<ReviewDto> {
     private static final Logger LOGGER = Logger.getLogger(ReviewDtoDbDataSaver.class);
+    private static final String PASSWORD = "1111";
+    private static final String ROLE_NAME = "USER";
     private final UserService userService;
     private final ProductService productService;
     private final ReviewService reviewService;
@@ -46,24 +48,21 @@ public class ReviewDtoDbDataSaver implements DbDataSaver<ReviewDto> {
     public void saveData(List<ReviewDto> reviewList) {
         long start = System.currentTimeMillis();
         LOGGER.info("saveData starts at " + start);
-        Role userRole = Role.of("USER");
-        Role adminRole = Role.of("ADMIN");
-        roleService.add(userRole);
-        roleService.add(adminRole);
+        addRolesIntoDb();
         List<User> users = new ArrayList<>();
         List<Product> products = new ArrayList<>();
         List<Review> reviews = new ArrayList<>();
         for (ReviewDto reviewDto : reviewList) {
             User user = userMapper.mapToUser(reviewDto);
-            user.setPassword("1111");
-            user.setRoles(Set.of(roleService.getRoleByName("USER")));
+            user.setPassword(PASSWORD);
+            user.setRoles(Set.of(roleService.getRoleByName(ROLE_NAME)));
+            users.add(user);
             Product product = productMapper.mapToProduct(reviewDto);
             products.add(product);
             Review review = reviewMapper.mapToReview(reviewDto);
             review.setUser(user);
             review.setProduct(product);
             reviews.add(review);
-            users.add(user);
         }
         userService.addAll(users);
         productService.addAll(products);
@@ -71,5 +70,12 @@ public class ReviewDtoDbDataSaver implements DbDataSaver<ReviewDto> {
         long end = System.currentTimeMillis();
         LOGGER.info("saveData ends at " + end + "\nstartReviewDtoDbDataSaver worked "
                 + (end - start) / 1000 + " seconds");
+    }
+
+    private void addRolesIntoDb() {
+        Role userRole = Role.of("USER");
+        Role adminRole = Role.of("ADMIN");
+        roleService.add(userRole);
+        roleService.add(adminRole);
     }
 }

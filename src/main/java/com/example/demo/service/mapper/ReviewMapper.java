@@ -2,9 +2,9 @@ package com.example.demo.service.mapper;
 
 import com.example.demo.model.Review;
 import com.example.demo.model.ReviewDto;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class ReviewMapper {
     public Review mapToReview(ReviewDto reviewDto) {
         Review review = new Review();
