@@ -39,14 +39,14 @@ public class UserMapperTest {
     @Test
     public void mapToUserOk() {
         User user = userMapper.mapToUser(expectedReviewDto);
-        Assert.assertEquals(user.getExternalId(), expectedReviewDto.getUserId());
-        Assert.assertEquals(user.getProfileName(), expectedReviewDto.getProfileName());
+        Assert.assertEquals(expectedReviewDto.getUserId(), user.getExternalId());
+        Assert.assertEquals(expectedReviewDto.getProfileName(), user.getProfileName());
     }
 
     @Test
     public void mapEmptyReviewDto() {
         User actualUser = userMapper.mapToUser(emptyReviewDto);
         User expectedUser = new User();
-        Assert.assertEquals(actualUser, expectedUser);
+        Assert.assertEquals(expectedUser, actualUser);
     }
 }

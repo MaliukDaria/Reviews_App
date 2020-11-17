@@ -52,13 +52,13 @@ public class ReviewMapperTest {
     @Test
     public void mapToReviewOk() {
         Review review = reviewMapper.mapToReview(expectedFullReviewDto);
-        Assert.assertEquals(review.getDateTime(), expectedFullReviewDto.getDateTime());
-        Assert.assertEquals(review.getExternalId(), expectedFullReviewDto.getId());
-        Assert.assertEquals(review.getHelpfulnessDenominator(), expectedFullReviewDto.getHelpfulnessDenominator());
-        Assert.assertEquals(review.getHelpfulnessNumerator(), expectedFullReviewDto.getHelpfulnessNumerator());
-        Assert.assertEquals(review.getScore(), expectedFullReviewDto.getScore());
-        Assert.assertEquals(review.getSummary(), expectedFullReviewDto.getSummary());
-        Assert.assertEquals(review.getText(), expectedFullReviewDto.getText());
+        Assert.assertEquals(expectedFullReviewDto.getDateTime(), review.getDateTime());
+        Assert.assertEquals(expectedFullReviewDto.getId(), review.getExternalId());
+        Assert.assertEquals(expectedFullReviewDto.getHelpfulnessDenominator(), review.getHelpfulnessDenominator());
+        Assert.assertEquals(expectedFullReviewDto.getHelpfulnessNumerator(), review.getHelpfulnessNumerator());
+        Assert.assertEquals(expectedFullReviewDto.getScore(), review.getScore());
+        Assert.assertEquals(expectedFullReviewDto.getSummary(), review.getSummary());
+        Assert.assertEquals(expectedFullReviewDto.getText(), review.getText());
     }
 
     @Test
@@ -66,17 +66,17 @@ public class ReviewMapperTest {
         Review review = reviewMapper.mapToReview(expectedReviewDtoWithMissingFields);
         Assert.assertNull(review.getSummary());
         Assert.assertNull(review.getScore());
-        Assert.assertEquals(review.getDateTime(), expectedReviewDtoWithMissingFields.getDateTime());
-        Assert.assertEquals(review.getExternalId(), expectedReviewDtoWithMissingFields.getId());
-        Assert.assertEquals(review.getHelpfulnessDenominator(), expectedReviewDtoWithMissingFields.getHelpfulnessDenominator());
-        Assert.assertEquals(review.getHelpfulnessNumerator(), expectedReviewDtoWithMissingFields.getHelpfulnessNumerator());
-        Assert.assertEquals(review.getText(), expectedReviewDtoWithMissingFields.getText());
+        Assert.assertEquals(expectedReviewDtoWithMissingFields.getDateTime(), review.getDateTime());
+        Assert.assertEquals(expectedReviewDtoWithMissingFields.getId(), review.getExternalId());
+        Assert.assertEquals(expectedReviewDtoWithMissingFields.getHelpfulnessDenominator(), review.getHelpfulnessDenominator());
+        Assert.assertEquals(expectedReviewDtoWithMissingFields.getHelpfulnessNumerator(), review.getHelpfulnessNumerator());
+        Assert.assertEquals(expectedReviewDtoWithMissingFields.getText(), review.getText());
     }
 
     @Test
     public void mapEmptyDto() {
         Review actualReview = reviewMapper.mapToReview(emptyReviewDto);
         Review expectedReview = new Review();
-        Assert.assertEquals(actualReview, expectedReview);
+        Assert.assertEquals(expectedReview, actualReview);
     }
 }
