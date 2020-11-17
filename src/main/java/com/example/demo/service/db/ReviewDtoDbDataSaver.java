@@ -13,7 +13,9 @@ import com.example.demo.service.mapper.ProductMapper;
 import com.example.demo.service.mapper.ReviewMapper;
 import com.example.demo.service.mapper.UserMapper;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
@@ -49,23 +51,32 @@ public class ReviewDtoDbDataSaver implements DbDataSaver<ReviewDto> {
         long start = System.currentTimeMillis();
         LOGGER.info("saveData starts at " + start);
         addRolesIntoDb();
-        List<User> users = new ArrayList<>();
-        List<Product> products = new ArrayList<>();
+        Map<String, User> users = new HashMap<>();
+        Map<String, Product> products = new HashMap<>();
         List<Review> reviews = new ArrayList<>();
+        Role userRole = roleService.getRoleByName(ROLE_NAME);
         for (ReviewDto reviewDto : reviewList) {
             User user = userMapper.mapToUser(reviewDto);
             user.setPassword(PASSWORD);
-            user.setRoles(Set.of(roleService.getRoleByName(ROLE_NAME)));
-            users.add(user);
+            user.setRoles(Set.of(userRole));
+            User userFromMap = users.get(user.getExternalId());
+            if (userFromMap != null) {
+                user.setId(userFromMap.getId());
+            }
+            User userFromDb = userService.add(user);
+            users.put(userFromDb.getExternalId(), userFromDb);
             Product product = productMapper.mapToProduct(reviewDto);
-            products.add(product);
+            Product productFromMap = products.get(product.getExternalId());
+            if (productFromMap != null) {
+                product.setId(productFromMap.getId());
+            }
+            Product productFromDb = productService.add(product);
+            products.put(productFromDb.getExternalId(), productFromDb);
             Review review = reviewMapper.mapToReview(reviewDto);
-            review.setUser(user);
-            review.setProduct(product);
+            review.setUser(userFromDb);
+            review.setProduct(productFromDb);
             reviews.add(review);
         }
-        userService.addAll(users);
-        productService.addAll(products);
         reviewService.addAll(reviews);
         long end = System.currentTimeMillis();
         LOGGER.info("saveData ends at " + end + "\nstartReviewDtoDbDataSaver worked "

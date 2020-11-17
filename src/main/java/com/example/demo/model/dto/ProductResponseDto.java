@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserResponseDto {
-private String profileName;
+public class ProductResponseDto {
+    private Long id;
 }
