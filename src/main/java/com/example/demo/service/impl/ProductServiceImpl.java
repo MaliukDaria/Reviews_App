@@ -27,7 +27,6 @@ public class ProductServiceImpl implements ProductService {
         productRepository.saveAll(products);
     }
 
-
     @Override
     public List<ProductResponseDto> getMostCommented(int numberOfProducts) {
         return productRepository.getMostCommented(PageRequest.of(0, numberOfProducts));

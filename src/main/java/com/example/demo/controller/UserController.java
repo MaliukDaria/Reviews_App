@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    private static final String NUMBER_OF_USERS = "10";
+    private static final String NUMBER_OF_USERS = "1000";
     private UserService userService;
 
     public UserController(UserService userService) {

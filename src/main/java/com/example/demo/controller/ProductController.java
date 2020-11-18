@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/products")
 public class ProductController {
-    private static final String NUMBER_OF_PRODUCTS = "10";
+    private static final String NUMBER_OF_PRODUCTS = "1000";
     private ProductService productService;
 
     public ProductController(ProductService productService) {
