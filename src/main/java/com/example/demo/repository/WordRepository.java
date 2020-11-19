@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 public interface WordRepository extends CrudRepository<Word, Long> {
-    @Query("SELECT word FROM Word ORDER BY amount DESC")
+    @Query("SELECT word FROM Word ORDER BY amount DESC, word")
     List<String> getMostUsedWords(Pageable pageable);
 }

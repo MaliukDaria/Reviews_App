@@ -12,6 +12,6 @@ public interface ProductRepository extends CrudRepository<Product, String> {
             + "FROM Review r "
             + "JOIN r.product p "
             + "GROUP BY p.id "
-            + "ORDER BY COUNT(p) DESC")
+            + "ORDER BY COUNT(p) DESC, p.id DESC")
     List<ProductResponseDto> getMostCommented(Pageable pageable);
 }

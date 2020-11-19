@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/reviews")
 public class ReviewController {
-    private static final String NUMBER_OF_WORDS = "1000";
+    private static final String DEFAULT_NUMBER_OF_WORDS = "1000";
     private final WordService wordService;
 
     public ReviewController(WordService wordService) {
@@ -19,7 +19,7 @@ public class ReviewController {
 
     @GetMapping("/common-words")
     List<String> getMostCommonWords(
-            @RequestParam(defaultValue = NUMBER_OF_WORDS) int numberOfWords) {
+            @RequestParam(defaultValue = DEFAULT_NUMBER_OF_WORDS) int numberOfWords) {
         return wordService.getMostUsedWords(numberOfWords);
     }
 }

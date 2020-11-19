@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/products")
 public class ProductController {
-    private static final String NUMBER_OF_PRODUCTS = "1000";
+    private static final String DEFAULT_NUMBER_OF_PRODUCTS = "1000";
     private ProductService productService;
 
     public ProductController(ProductService productService) {
@@ -20,7 +20,7 @@ public class ProductController {
 
     @GetMapping("/most-commented")
     public List<ProductResponseDto> getMostCommentedProducts(
-            @RequestParam(defaultValue = NUMBER_OF_PRODUCTS) int numberOfProducts) {
+            @RequestParam(defaultValue = DEFAULT_NUMBER_OF_PRODUCTS) int numberOfProducts) {
         return productService.getMostCommented(numberOfProducts);
     }
 }

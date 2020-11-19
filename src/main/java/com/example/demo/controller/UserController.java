@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    private static final String NUMBER_OF_USERS = "1000";
+    private static final String DEFAULT_NUMBER_OF_USERS = "1000";
     private UserService userService;
 
     public UserController(UserService userService) {
@@ -20,7 +20,7 @@ public class UserController {
 
     @GetMapping("/most-active")
     public List<UserResponseDto> getUser(
-            @RequestParam(defaultValue = NUMBER_OF_USERS) int numberOfUsers) {
+            @RequestParam(defaultValue = DEFAULT_NUMBER_OF_USERS) int numberOfUsers) {
         return userService.getActiveUsers(numberOfUsers);
     }
 }

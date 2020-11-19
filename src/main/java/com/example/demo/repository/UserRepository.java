@@ -12,6 +12,6 @@ public interface UserRepository extends CrudRepository<User, String> {
             + "FROM Review r "
             + "JOIN r.user u "
             + "GROUP BY u.id "
-            + "ORDER BY COUNT(r) DESC")
+            + "ORDER BY COUNT(r) DESC, u.profileName")
     List<UserResponseDto> getActiveUsers(Pageable pageable);
 }

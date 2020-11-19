@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-    private static final int NUMBER_OF_MOST_COMMENTED_PRODUCTS = 10;
     private final ProductRepository productRepository;
 
     public ProductServiceImpl(ProductRepository productRepository) {
